@@ -28,7 +28,7 @@ func getEncodedCredentials() string {
 	return encodedCredentials
 }
 
-func GetToken() (*velocityTokenResponse, error) {
+func GetToken() (velocityTokenResponse, error) {
 	tokenEndpoint := config.Config("VELOCITY_AUTH_ENDPOINT")
 	encodedCredentials := getEncodedCredentials()
 	headers := http.Header{
@@ -44,13 +44,13 @@ func GetToken() (*velocityTokenResponse, error) {
 	client := &custom_http_client.CustomHttpClient{Client: http.DefaultClient}
 	response, err := client.MakeRequest(http.MethodPost, tokenEndpoint, urlencodedBody, headers)
 	if err != nil {
-		return nil, err
+		return velocityTokenResponse{}, err
 	}
 
 	var decodedResponse = &velocityTokenResponse{}
 	err = json.Unmarshal(response, decodedResponse)
 	if err != nil {
-		return nil, err
+		return velocityTokenResponse{}, err
 	}
-	return decodedResponse, nil
+	return *decodedResponse, nil
 }
