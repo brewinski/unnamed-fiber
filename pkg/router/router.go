@@ -16,6 +16,7 @@ func SetupRoutes(app *fiber.App) {
 	api_v1 := api.Group("v1") // Group endpoints with param 'v1'
 	setupNotesRoutes(api_v1)
 	setupUserRoutes(api_v1)
+	setupVelocityRoutes(api_v1)
 
 	api_v2 := api.Group("v2") // Group endpoints with param 'v2'
 	setupNotesRoutes(api_v2)
